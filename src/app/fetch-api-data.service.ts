@@ -23,6 +23,13 @@ export class FetchApiDataServie {
   }
 
 
+  public userLogin(userCredentials: any): Observable<any> {
+    console.log(userCredentials);
+    return this.http
+      .post(apiUrl + 'login', userCredentials)
+      .pipe(catchError(this.handleError));
+  }
+  
   private handleError(error: HttpErrorResponse): any {
     if (error.error instanceof ErrorEvent) {
       console.error('some error occurred:', error.error.message);
