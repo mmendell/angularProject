@@ -119,10 +119,11 @@ export class FetchApiDataServie {
     .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
-  userUpdate(): Observable<any>{
+  userUpdate(updatedUser: any): Observable<any>{
+    const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     return this.http
-    .put(apiUrl + '/users/:username', {
+    .put(`${apiUrl}users/${username}`, updatedUser, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token, 
       }),
@@ -141,6 +142,30 @@ export class FetchApiDataServie {
     .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
+  addFavoriteBook(bookId: string): Observable<any>{
+    const username = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    return this.http
+    .post(
+      `${apiUrl}users/${username}/books/${bookId}`,
+      {favoriteBook: bookId},
+
+      {
+        headers: new HttpHeaders({ Authorization: 'Bearer: ' + token}),
+      }
+    )
+    .pipe(map(this.extractResponseData), catchError(this.handleError));
+  }
+
+  removeFavorite(bookId: string): Observable<any> {
+    const username = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    return this.http
+    .delete(`${apiUrl}users/${username}/books/${bookId}`, {
+      headers: new HttpHeaders({ Authorization: 'Bearer: ' + token}),
+    })
+    .pipe(map(this.extractResponseData), catchError(this.handleError));
+  }
 
   private extractResponseData(res: any): any {
     const body = res;

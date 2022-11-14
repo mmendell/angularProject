@@ -14,11 +14,36 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FormsModule } from '@angular/forms';
 import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { BookCardComponent } from './book-card/book-card.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { MatIconModule } from '@angular/material/icon';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { AuthorComponent } from './author/author.component';
+import { GenreComponent } from './genre/genre.component';
+import { BookDetailsComponent } from './book-details/book-details.component';
+import { Routes } from '@angular/router';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+
+
+const appRoutes: Routes = [
+  { path: 'welcome', component: WelcomePageComponent },
+  { path: 'books', component: BookCardComponent },
+  { path: 'profile', component: ProfilePageComponent},
+  { path: '', redirectTo: 'welcome', pathMatch: 'prefix'},
+];
+
 @NgModule({
   declarations: [
     AppComponent,
     UserRegistrationFormComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    BookCardComponent,
+    WelcomePageComponent,
+    ProfilePageComponent,
+    AuthorComponent,
+    GenreComponent,
+    BookDetailsComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +57,9 @@ import { LoginFormComponent } from './login-form/login-form.component';
     MatInputModule,
     MatCardModule,
     MatFormFieldModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatIconModule,
+    NavBarComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
