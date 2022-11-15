@@ -27,6 +27,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AuthorComponent } from './author/author.component';
 import { GenreComponent } from './genre/genre.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 
 const appRoutes: Routes = [
@@ -47,7 +48,8 @@ const appRoutes: Routes = [
     AuthorComponent,
     GenreComponent,
     BookDetailsComponent,
-    NavBarComponent
+    NavBarComponent,
+    EditProfileComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

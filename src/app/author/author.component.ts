@@ -17,6 +17,8 @@ export class AuthorComponent implements OnInit {
     }
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+   
+  }
 
 }

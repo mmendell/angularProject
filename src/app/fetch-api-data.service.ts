@@ -44,7 +44,7 @@ export class FetchApiDataServie {
   getAllBooks(): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
-    .get(apiUrl + 'books', {
+    .get(`${apiUrl}books`, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token,
       }),
@@ -97,9 +97,10 @@ export class FetchApiDataServie {
   }
 
   userProfile(): Observable<any>{
+    const username = localStorage.getItem('user');
     const token = localStorage.getItem('token');
     return this.http
-    .get(apiUrl + '/users/:username', {
+    .get(`${apiUrl}users/${username}`, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token, 
       }),

@@ -14,6 +14,7 @@ import { GenreComponent } from '../genre/genre.component';
 export class BookCardComponent {
   books: any[] = [];
   favorites: any[] = [];
+  user: any = {}
 
   constructor(public fetchApiData: FetchApiDataServie,
     public dialog: MatDialog,

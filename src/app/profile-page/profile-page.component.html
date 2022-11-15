@@ -1,77 +1,34 @@
-<p>profile-page works!</p>
-<div class="profile-page">
-  <mat-card class="profile-card">
-    <mat-card-header>
-      <mat-card-title>Here are your Details {{ updatedUser.username}}</mat-card-title>
-
+<app-nav-bar></app-nav-bar>
+<div class="user-profile-page">
+  <!-- User Profile -->
+  <mat-card class="user-profile-card">
+    <mat-card-header class="user-profile-card-header">
+      <mat-card-title>Profile Information</mat-card-title>
     </mat-card-header>
-    <mat-card-content class="profiel-card-content">
-      <form>
 
-        <!-- username input -->
-        <mat-form-field>
-          <mat-label>Username</mat-label>
-          <input
-          matInput
-          [(ngModel)]="updatedUser.username"
-          value="{{updatedUser.username}}"
-          type="text"
-          name="Username"
-          required
-          />
-        </mat-form-field>
-
-        <!-- password input -->
-        <mat-form-field>
-          <mat-label>Password</mat-label>
-          <input
-          matInput
-          [(ngModel)]="updatedUser.password"
-          value="{{updatedUser.password}}"
-          type="text"
-          name="Password"
-          required
-          />
-        </mat-form-field>
-
-        <!-- email update -->
-        <mat-form-field>
-          <mat-label>Email</mat-label>
-          <input
-          matInput
-          [(ngModel)]="updatedUser.email"
-          value="{{updatedUser.email}}"
-          type="text"
-          name="Email"
-          required
-          />
-        </mat-form-field>
-
-        <!-- birth day update -->
-
-        <mat-form-field>
-          <mat-label>Birthday</mat-label>
-          <input
-          matInput
-          [(ngModel)]="updatedUser.birthday"
-          value="{{updatedUser.birthday}}"
-          type="text"
-          name="Birthday"
-          required
-          />
-        </mat-form-field>
-      </form>
+    <!-- View Profile Information -->
+    <mat-card-content class="user-profile-card-content">
+      <p><b>Username:</b> {{ user.username }}</p>
+      <p><b>Email:</b> {{ user.email }}</p>
+      <p><b>Birthday:</b> {{ user.birthday | date }}</p>
     </mat-card-content>
 
-    <mat-card-actions class="profiel actions">
-      <button mat-raised-button (click)="updateUserInfo()" color="basic">
+    <!-- Edit Profile Information & Delete Profile -->
+    <mat-card-actions class="user-profile-actions">
+      <button
+        mat-raised-button
+        (click)="openEditProfile()"
+        color="primary"
+      >
         <mat-icon>edit</mat-icon>
-        Update Profile
+        Edit Profile
       </button>
       <button mat-raised-button (click)="deleteAccount()" color="warn">
         <mat-icon>delete_forever</mat-icon>
-        Delete Account
+        Delete Profile
       </button>
     </mat-card-actions>
   </mat-card>
+
+  <!-- Display Favorite Movies -->
 </div>

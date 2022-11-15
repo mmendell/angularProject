@@ -11,8 +11,8 @@ export class BookDetailsComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      title: string,
-      description: string,
+      title: string;
+      description: string;
     }
   ) { }
 

@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { FetchApiDataServie } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 
 @Component({
   selector: 'app-profile-page',
@@ -11,17 +12,11 @@ import { Router } from '@angular/router';
 })
 export class ProfilePageComponent implements OnInit {
   user: any = {};
-  initialInput: any = {};
-  @Input() updatedUser = {
-    username: '',
-    password: '',
-    email: '',
-    birthday: '',
-  };
+
 
   constructor(
     public fetchApiData: FetchApiDataServie,
-    public dialogRef: MatDialogRef<ProfilePageComponent>,
+    public dialog: MatDialog,
     public snackBar: MatSnackBar,
     public router: Router) { }
 
@@ -32,32 +27,14 @@ export class ProfilePageComponent implements OnInit {
   getUserInfo(): void {
     this.fetchApiData.userProfile().subscribe((resp: any) => {
       this.user = resp;
-      this.updatedUser.username = this.user.username;
-      this.updatedUser.password = this.user.password;
-      this.updatedUser.email = this.user.email;
-      this.updatedUser.birthday = this.user.birthday;
-      console.log(this.updatedUser);
+      console.log(this.user);
       return this.user;
     });
   }
 
-  updateUserInfo(): void {
-    this.fetchApiData.userUpdate(this.updatedUser).subscribe((result) => {
-      console.log(result);
-      this.snackBar.open('User profile successfully updated', 'OK', {
-        duration: 2000,
-      });
-      if (this.user.Username !== result.username) {
-        localStorage.clear();
-        this.router.navigate(['welcome']);
-        this.snackBar.open(
-          'User profile successfully updated. Please login using your new credentials',
-          'OK',
-          {
-            duration: 2000,
-          }
-        );
-      }
+  openEditProfile(): void {
+    this.dialog.open(EditProfileComponent, {
+      width: '400px',
     });
   }
 
