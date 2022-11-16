@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FetchApiDataServie } from '../fetch-api-data.service';
+import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
@@ -8,24 +8,25 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
-  styleUrls: ['./profile-page.component.css']
+  styleUrls: ['./profile-page.component.scss'],
 })
+
 export class ProfilePageComponent implements OnInit {
   user: any = {};
 
-
   constructor(
-    public fetchApiData: FetchApiDataServie,
+    public fetchApiData: FetchApiDataService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    public router: Router) { }
+    public router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getUserInfo();
   }
 
   getUserInfo(): void {
-    this.fetchApiData.userProfile().subscribe((resp: any) => {
+    this.fetchApiData.getUser().subscribe((resp: any) => {
       this.user = resp;
       console.log(this.user);
       return this.user;
@@ -39,21 +40,25 @@ export class ProfilePageComponent implements OnInit {
   }
 
   deleteAccount(): void {
-    if (confirm('all your data will be ersased. THIS CANNOT BE UNDONE')) {
+    if (
+      confirm(
+        'Are you sure you want to delete your account? This cannnot be undone.'
+      )
+    ) {
+      this.fetchApiData.deleteUser().subscribe((result) => {
+        console.log(result);
+        localStorage.clear();
+      });
+
       this.router.navigate(['welcome']).then(() => {
         this.snackBar.open(
-          ' your account has been deleted',
-          'ok',
+          'You have successfully deleted your account!',
+          'OK',
           {
             duration: 2000,
           }
         );
       });
-      this.fetchApiData.deleteUser().subscribe((result) => {
-        console.log(result);
-        localStorage.clear();
-      });
     }
   }
-
 }

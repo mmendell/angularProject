@@ -1,24 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { FetchApiDataService } from '../fetch-api-data.service';
+
+import { GenreComponent } from '../genre/genre.component';
 import { AuthorComponent } from '../author/author.component';
 import { BookDetailsComponent } from '../book-details/book-details.component';
-import { FetchApiDataServie } from '../fetch-api-data.service';
-import { GenreComponent } from '../genre/genre.component';
+
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-book-card',
   templateUrl: './book-card.component.html',
-  styleUrls: ['./book-card.component.css']
+  styleUrls: ['./book-card.component.scss'],
 })
 export class BookCardComponent {
   books: any[] = [];
-  favorites: any[] = [];
-  user: any = {}
+  favoriteBooks: any[] = [];
 
-  constructor(public fetchApiData: FetchApiDataServie,
+  constructor(
+    public fetchApiData: FetchApiDataService,
     public dialog: MatDialog,
-    public snackBar: MatSnackBar) { }
+    public snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.getBooks();
@@ -34,18 +37,18 @@ export class BookCardComponent {
   }
 
   getFavorites(): void {
-    this.fetchApiData.userProfile().subscribe((resp: any) => {
-      this.favorites = resp.FavoriteBooks;
-      console.log(this.favorites);
-      return this.favorites;
+    this.fetchApiData.getUser().subscribe((resp: any) => {
+      this.favoriteBooks = resp.favoriteBook;
+      console.log(this.favoriteBooks);
+      return this.favoriteBooks;
     });
   }
 
-  isFavorite(id: string): boolean {
-    return this.favorites.includes(id);
+  isFav(id: string): boolean {
+    return this.favoriteBooks.includes(id);
   }
 
-  addToFavorites(id: string) : void {
+  addToFavorites(id: string): void {
     console.log(id);
     this.fetchApiData.addFavoriteBook(id).subscribe((result) => {
       console.log(result);
@@ -57,8 +60,7 @@ export class BookCardComponent {
   }
 
   removeFromFavorites(id: string): void {
-    console.log(id);
-    this.fetchApiData.removeFavorite(id).subscribe((result) => {
+    this.fetchApiData.removeFavoriteBook(id).subscribe((result) => {
       console.log(result);
       this.snackBar.open('book removed from favorites', 'ok', {
         duration: 2000,
@@ -67,7 +69,7 @@ export class BookCardComponent {
     });
   }
 
-  openGenre(name: string, description: string): void {
+  openGenreDialog(name: string, description: string): void {
     this.dialog.open(GenreComponent, {
       data: {
         Name: name,
@@ -78,19 +80,19 @@ export class BookCardComponent {
     });
   }
 
-  opneAuthor(name: string, bio: string, birthday: string): void {
+  openAuthorDialog(name: string, bio: string, birth: string): void {
     this.dialog.open(AuthorComponent, {
       data: {
         name: name,
         bio: bio,
-        birthday: birthday,
+        birthday: birth,
       },
       panelClass: 'author-dialog-background',
       width: '400px',
-    })
+    });
   }
 
-  openSummary(title: string, description: string): void {
+  openDetailsDialog(title: string, description: string): void {
     this.dialog.open(BookDetailsComponent, {
       data: {
         description: description,
@@ -100,5 +102,4 @@ export class BookCardComponent {
       width: '400px',
     });
   }
-
 }
